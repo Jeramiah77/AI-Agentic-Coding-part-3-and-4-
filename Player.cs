@@ -25,6 +25,11 @@ public class Player
     public int HealthPoints { get; set; }
 
     public Weapon? Weapon { get; set; }
+    public Armor? Armor { get; set; }
+
+    // Gold is spent at the Merchant. It is 10 + d20, with no race modifier.
+    public const int BaseGold = 10;
+    public int Gold { get; set; }
 
     public void CreateCharacter(Messages messages)
     {
@@ -37,6 +42,7 @@ public class Player
         int strengthModifier = RollStrength(messages);
         RollAgility(messages);
         RollHealthPoints(messages, strengthModifier);
+        RollGold(messages);
 
         PromptForNextAction(messages);
     }
@@ -120,6 +126,12 @@ public class Player
         GenerateHealthPoints(strengthModifier);
     }
 
+    private void RollGold(Messages messages)
+    {
+        PromptRoll(messages.GetMessage("roll_gold"), messages);
+        GenerateGold();
+    }
+
     // --- Dice math (no console input, so it can be unit tested) ---
 
     // Rolls d20 for Strength plus a d4 modifier: Halflings subtract it,
@@ -155,6 +167,12 @@ public class Player
         HealthPoints = Math.Max(MinStat, _die.Roll(20) + strengthModifier);
     }
 
+    // Rolls d20 and adds BaseGold, giving 11 to 30 Gold for every race.
+    public void GenerateGold()
+    {
+        Gold = BaseGold + _die.Roll(20);
+    }
+
     private void PromptForNextAction(Messages messages)
     {
         while (true)
@@ -186,6 +204,11 @@ public class Player
             Console.WriteLine(messages.GetMessage("stats_weapon") + messages.TranslateWeaponForDisplay(Weapon.Type));
             Console.WriteLine(messages.GetMessage("stats_damage") + Weapon.MaxDamage);
         }
+
+        if (Armor != null)
+            Console.WriteLine(messages.GetMessage("stats_armor") + Armor.Protection);
+
+        Console.WriteLine(messages.GetMessage("stats_gold") + Gold);
     }
 
     public int RollAttack()

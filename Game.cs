@@ -1,5 +1,10 @@
 public class Game
 {
+    private readonly Merchant _merchant = new Merchant();
+
+    // The Merchant Encounter happens only on the first trip south.
+    public bool MerchantMet { get; private set; }
+
     public void StartGame()
     {
         // Title screen
@@ -55,7 +60,7 @@ public class Game
                     }
                     else if (selectedPath == "south")
                     {
-                        Console.WriteLine(messages.GetMessage("south_path_narrative"));
+                        HandleMerchantEncounter(player, messages);
                     }
                     else if (selectedPath == "north")
                     {
@@ -130,6 +135,72 @@ public class Game
                 return "exit";
 
             Console.WriteLine(messages.GetMessage("path_invalid"));
+        }
+    }
+
+    // Runs the shop menu. Items use fixed numbers (1 armor, 2 weapon,
+    // 3 leave); an item the Player already owns drops off the menu.
+    // Afterwards the Player is back at the crossroads.
+    public void HandleMerchantEncounter(Player player, Messages messages)
+    {
+        if (MerchantMet)
+        {
+            Console.WriteLine(messages.GetMessage("merchant_gone"));
+            return;
+        }
+
+        MerchantMet = true;
+        Console.WriteLine(messages.GetMessage("south_path_narrative"));
+        Console.WriteLine(messages.GetMessage("merchant_greeting"));
+
+        while (true)
+        {
+            bool armorOffered = _merchant.IsOffered(player, MerchantItem.MagicalArmor);
+            bool weaponOffered = _merchant.IsOffered(player, MerchantItem.MagicalWeapon);
+
+            if (!armorOffered && !weaponOffered)
+            {
+                Console.WriteLine(messages.GetMessage("merchant_farewell"));
+                return;
+            }
+
+            Console.WriteLine(string.Format(messages.GetMessage("merchant_gold"), player.Gold));
+
+            if (armorOffered)
+                Console.WriteLine(string.Format(messages.GetMessage("merchant_option_armor"),
+                    Merchant.ArmorProtection, Merchant.ArmorPrice));
+
+            if (weaponOffered)
+                Console.WriteLine(string.Format(messages.GetMessage("merchant_option_weapon"),
+                    messages.TranslateWeaponForDisplay(player.Weapon!.Type), Merchant.WeaponDamageBonus, Merchant.WeaponPrice));
+
+            Console.WriteLine(messages.GetMessage("merchant_option_leave"));
+            Console.Write(messages.GetMessage("enter_choice"));
+            string? input = Console.ReadLine()?.Trim();
+
+            // End of input (e.g. stream closed): leave instead of looping forever.
+            if (input == null || input == "3")
+            {
+                Console.WriteLine(messages.GetMessage("merchant_farewell"));
+                return;
+            }
+
+            MerchantItem? item = input switch
+            {
+                "1" when armorOffered => MerchantItem.MagicalArmor,
+                "2" when weaponOffered => MerchantItem.MagicalWeapon,
+                _ => null
+            };
+
+            if (item == null)
+                Console.WriteLine(messages.GetMessage("invalid"));
+            else if (!_merchant.Buy(player, item.Value))
+                Console.WriteLine(messages.GetMessage("merchant_not_enough_gold"));
+            else if (item == MerchantItem.MagicalArmor)
+                Console.WriteLine(messages.GetMessage("merchant_bought_armor"));
+            else
+                Console.WriteLine(string.Format(messages.GetMessage("merchant_bought_weapon"),
+                    messages.TranslateWeaponForDisplay(player.Weapon!.Type)));
         }
     }
 

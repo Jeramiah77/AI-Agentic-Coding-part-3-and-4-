@@ -93,6 +93,23 @@ public class Dragon
         }
 
         int damage = RollDamage();
+
+        // ARMOR: Protection is taken off the hit, never below zero.
+        if (player.Armor != null)
+        {
+            int absorbed = player.Armor.Absorb(damage);
+            damage -= absorbed;
+
+            if (damage == 0)
+            {
+                output.Add(messages.GetMessage("armor_absorbed_all"));
+                return string.Join(Environment.NewLine, output);
+            }
+
+            if (absorbed > 0)
+                output.Add(string.Format(messages.GetMessage("armor_absorbed"), absorbed));
+        }
+
         player.HealthPoints -= damage;
 
         if (player.HealthPoints < 0)
