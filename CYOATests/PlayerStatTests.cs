@@ -138,4 +138,24 @@ public class PlayerStatTests
                     Assert.IsTrue(player.HealthPoints >= 1, $"HealthPoints {player.HealthPoints} below 1 for {roll}");
                 }
     }
+
+    // The result shown after each roll must exist and format in every language.
+    [TestMethod]
+    [DataRow("English")]
+    [DataRow("Spanish")]
+    [DataRow("French")]
+    [DataRow("Italian")]
+    public void RolledResultMessages_ExistAndFormat(string language)
+    {
+        Messages messages = new Messages();
+        messages.SetCurrentLanguage(language);
+        messages.ReadDictionary();
+
+        foreach (string key in new[] { "rolled_strength", "rolled_agility", "rolled_health", "rolled_gold" })
+        {
+            string text = string.Format(messages.GetMessage(key), 17);
+            StringAssert.Contains(text, "17", $"{language} '{key}' should show the rolled value.");
+            Assert.IsFalse(text.StartsWith("["), $"{language} is missing '{key}'.");
+        }
+    }
 }

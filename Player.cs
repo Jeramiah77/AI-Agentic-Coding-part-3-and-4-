@@ -111,25 +111,30 @@ public class Player
     private int RollStrength(Messages messages)
     {
         PromptRoll(messages.GetMessage("roll_strength"), messages);
-        return GenerateStrength();
+        int modifier = GenerateStrength();
+        Console.WriteLine(string.Format(messages.GetMessage("rolled_strength"), Strength));
+        return modifier;
     }
 
     private void RollAgility(Messages messages)
     {
         PromptRoll(messages.GetMessage("roll_agility"), messages);
         GenerateAgility();
+        Console.WriteLine(string.Format(messages.GetMessage("rolled_agility"), Agility));
     }
 
     private void RollHealthPoints(Messages messages, int strengthModifier)
     {
         PromptRoll(messages.GetMessage("roll_health"), messages);
         GenerateHealthPoints(strengthModifier);
+        Console.WriteLine(string.Format(messages.GetMessage("rolled_health"), HealthPoints));
     }
 
     private void RollGold(Messages messages)
     {
         PromptRoll(messages.GetMessage("roll_gold"), messages);
         GenerateGold();
+        Console.WriteLine(string.Format(messages.GetMessage("rolled_gold"), Gold));
     }
 
     // --- Dice math (no console input, so it can be unit tested) ---
