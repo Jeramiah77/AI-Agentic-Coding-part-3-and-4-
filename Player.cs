@@ -251,6 +251,7 @@ public class Player
         output.Add(Weapon.AsciiArt);
 
         int attackRoll = RollAttack();
+        output.Add(string.Format(messages.GetMessage("player_attack_roll"), attackRoll, Strength));
 
         // MISS
         if (!AttackHits(attackRoll))
@@ -262,6 +263,7 @@ public class Player
         output.Add(string.Format(messages.GetMessage("player_hit_dragon"), dragon.Name));
 
         int defenseRoll = _die.Roll(20);
+        output.Add(string.Format(messages.GetMessage("block_roll"), dragon.Name, defenseRoll, dragon.Agility));
 
         // DEFENSE
         if (defenseRoll <= dragon.Agility)
