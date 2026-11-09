@@ -30,18 +30,33 @@ public class Combat
             if (player.HealthPoints <= 0)
                 return false;
 
-            Console.WriteLine(messages.GetMessage("attack_prompt"));
-            string? input = Console.ReadLine()?.Trim().ToLower();
-
-            if (input == "r" || input == "retreat")
+            if (PromptForRetreat())
             {
                 PlayerRetreated = true;
                 Console.WriteLine(messages.GetMessage("retreat_combat"));
                 return false;
             }
+        }
+    }
+
+    // Keeps asking until the player types a valid choice, so a typo
+    // never counts as an attack. Returns true if the player retreats.
+    private bool PromptForRetreat()
+    {
+        while (true)
+        {
+            Console.WriteLine(messages.GetMessage("attack_prompt"));
+            string? input = Console.ReadLine()?.Trim().ToLower();
+
+            if (input == "r" || input == "retreat")
+                return true;
 
             if (input == "a" || input == "attack")
-                continue;
+                return false;
+
+            // End of input (e.g. stream closed): retreat instead of looping forever.
+            if (input == null)
+                return true;
 
             Console.WriteLine(messages.GetMessage("invalid"));
         }

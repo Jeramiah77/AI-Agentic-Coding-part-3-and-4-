@@ -149,3 +149,68 @@ public class CombatTests
         StringAssert.Contains(result, messages.GetMessage("stats_damage"));
     }
 }
+
+
+[TestClass]
+[DoNotParallelize]
+public class CombatInputTests
+{
+    private TextReader? _originalIn;
+    private TextWriter? _originalOut;
+
+    [TestInitialize]
+    public void Setup()
+    {
+        _originalIn = Console.In;
+        _originalOut = Console.Out;
+    }
+
+    [TestCleanup]
+    public void Cleanup()
+    {
+        if (_originalIn != null)
+            Console.SetIn(_originalIn);
+
+        if (_originalOut != null)
+            Console.SetOut(_originalOut);
+    }
+
+    [TestMethod]
+    public void StartCombat_InvalidInput_RepromptsInsteadOfAttacking()
+    {
+        Messages messages = new Messages();
+        messages.SetCurrentLanguage("English");
+        messages.ReadDictionary();
+
+        // Strength 0 means every attack misses, so nobody can die
+        // and the only way out of combat is retreating.
+        Player player = new Player
+        {
+            Name = "TestHero",
+            Race = "Human",
+            Occupation = "Fighter",
+            Strength = 0,
+            Agility = 10,
+            HealthPoints = 20,
+            Weapon = new Weapon("long sword", 12, "-)=====>")
+        };
+        Dragon dragon = new Dragon(new Die()) { Strength = 0, HealthPoints = 20 };
+
+        // A typo, then retreat.
+        Console.SetIn(new StringReader("xyz\nr\n"));
+        using StringWriter writer = new StringWriter();
+        Console.SetOut(writer);
+
+        Combat combat = new Combat(player, dragon, messages);
+        bool won = combat.StartCombat();
+
+        string output = writer.ToString();
+        string attackIntro = string.Format(messages.GetMessage("player_attack_intro"), "Fighter", "long sword");
+        int attackCount = output.Split(attackIntro).Length - 1;
+
+        Assert.IsFalse(won);
+        Assert.IsTrue(combat.PlayerRetreated);
+        Assert.AreEqual(1, attackCount, "The typo should not have triggered a second attack.");
+        StringAssert.Contains(output, messages.GetMessage("invalid"));
+    }
+}
