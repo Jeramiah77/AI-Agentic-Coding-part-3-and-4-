@@ -1,6 +1,6 @@
 # Spec: Troll Encounter on the West Path
 
-_Status: planned._
+_Status: implemented on `main`._
 
 ## Problem Statement
 
@@ -62,7 +62,7 @@ To support a second enemy, combat is generalized: `Dragon` and `Troll` share a *
 - **Fleeing:** before the fight returns to the crossroads with no change. Mid-fight retreat returns to the crossroads with Health Points as they are. In both cases the state stays `Unmet`. This differs on purpose from the dragon, where retreating ends the game.
 - **Winning the fight:** state becomes `Slain`. The Player gains **d10 + 5** Gold (6–15) and Troll Hide.
 - **Troll Hide:** if the Player has no armor, they get armor with Protection **3**. If they already have armor, its Protection rises by **2**.
-- **Losing the fight:** Troll-specific death text, then the existing `defeat` game-over ending.
+- **Losing the fight:** Troll-specific death text that ends with "The End." The shared `defeat` text isn't used, because it describes the dragon ("The dragon laughs as your eyesight fades").
 - **Riddles:** a pool of three, picked with a **d3** roll. Each is multiple choice with options `a`, `b`, `c` and one fixed correct answer. Invalid input asks again. Closed input counts as a wrong answer. English versions:
   1. "What has to be broken before you can use it?" a) an egg (correct), b) a promise, c) a bridge.
   2. "The more you take, the more you leave behind. What am I?" a) gold, b) footsteps (correct), c) breath.

@@ -4,10 +4,10 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** not started
+**Status:** done (implemented on `main`)
 
-- [ ] `Monster` base class with the shared attack resolution
-- [ ] `Dragon` inherits from `Monster`. Its stats, claws, taunts and damage replies are unchanged
-- [ ] `Combat` accepts any `Monster`
-- [ ] No new or changed player-visible text
-- [ ] Tests: every existing dragon, combat and game test passes with its assertions unchanged
+- [x] `Monster` base class with the shared attack resolution
+- [x] `Dragon` inherits from `Monster`. Its stats, claws, taunts and damage replies are unchanged
+- [x] `Combat` accepts any `Monster`
+- [x] No new or changed player-visible text
+- [x] Tests: every existing dragon, combat and game test passes with its assertions unchanged

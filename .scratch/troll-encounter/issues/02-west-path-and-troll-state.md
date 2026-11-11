@@ -4,17 +4,17 @@
 
 **Blocked by:** 01
 
-**Status:** not started
+**Status:** done (implemented on `main`)
 
-- [ ] `Troll : Monster` with Strength, Agility and HP each a d12, and a club with MaxDamage 8
-- [ ] `w`/`west` accepted by `PromptForPath` and `IsValidPathChoice`. `e` stays exit
-- [ ] Crossroads prompt text mentions West
-- [ ] `TrollState` on the Game. A new Game starts at `Unmet`
-- [ ] Encounter menu: invalid input asks again, closed input flees
-- [ ] Aftermath lines for `Slain` and `Outwitted`
-- [ ] All new text in English, Spanish, French and Italian
-- [ ] Tests: `GameTests.cs:168` changed on purpose so that "west" is valid
-- [ ] Tests: flee returns to the crossroads with no change, and a second trip west meets the Troll again
-- [ ] Tests: aftermath for each resolved state, setting the state directly
-- [ ] Tests: Troll stats are within 1–12
-- [ ] Tests: new keys exist in all four languages
+- [x] `Troll : Monster` with Strength, Agility and HP each a d12, and a club with MaxDamage 8
+- [x] `w`/`west` accepted by `PromptForPath` and `IsValidPathChoice`. `e` stays exit
+- [x] Crossroads prompt text mentions West
+- [x] `TrollState` on the Game. A new Game starts at `Unmet`
+- [x] Encounter menu: invalid input asks again, closed input flees
+- [x] Aftermath lines for `Slain` and `Outwitted`
+- [x] All new text in English, Spanish, French and Italian
+- [x] Tests: `GameTests.cs:168` changed on purpose so that "west" is valid
+- [x] Tests: flee returns to the crossroads with no change, and a second trip west meets the Troll again
+- [x] Tests: aftermath for each resolved state, setting the state directly
+- [x] Tests: Troll stats are within 1–12
+- [x] Tests: new keys exist in all four languages

@@ -4,8 +4,8 @@
 
 **Blocked by:** 04
 
-**Status:** not started
+**Status:** done (implemented on `main`)
 
-- [ ] Glossary entries: West path, Troll, Troll Encounter, Grumblegut, Monster, Hoard, Troll Hide, Riddle, Outwitted, Slain
-- [ ] Tests: every new formatted message formats without error in all four languages
-- [ ] Mark the spec status as implemented on `main`
+- [x] Glossary entries: West path, Troll, Troll Encounter, Grumblegut, Monster, Hoard, Troll Hide, Riddle, Outwitted, Slain
+- [x] Tests: every new formatted message formats without error in all four languages
+- [x] Mark the spec status as implemented on `main`

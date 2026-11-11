@@ -4,15 +4,15 @@
 
 **Blocked by:** 02
 
-**Status:** not started
+**Status:** done (implemented on `main`)
 
-- [ ] `a` starts the fight
-- [ ] Win: `Slain`, d10 + 5 Gold, Troll Hide
-- [ ] Lose: Troll death text, then `defeat` and the game ends
-- [ ] Mid-fight retreat: back to the crossroads, damage kept, state `Unmet`
-- [ ] Troll taunts, damage replies, reward and death text in all four languages
-- [ ] Tests: Gold is 6 at the lowest roll and 15 at the highest
-- [ ] Tests: hide gives Protection 3 with no armor, and turns existing Protection 3 into 5
-- [ ] Tests: losing ends the game with the Troll death text
-- [ ] Tests: mid-fight retreat keeps the damage and leaves the Troll `Unmet`
-- [ ] Tests: damage from the Troll is still missing at the start of the dragon fight
+- [x] `a` starts the fight
+- [x] Win: `Slain`, d10 + 5 Gold, Troll Hide
+- [x] Lose: Troll death text, and the game ends (the dragon-specific `defeat` text is skipped)
+- [x] Mid-fight retreat: back to the crossroads, damage kept, state `Unmet`
+- [x] Troll taunts, damage replies, reward and death text in all four languages
+- [x] Tests: Gold is 6 at the lowest roll and 15 at the highest
+- [x] Tests: hide gives Protection 3 with no armor, and turns existing Protection 3 into 5
+- [x] Tests: losing ends the game with the Troll death text
+- [x] Tests: mid-fight retreat keeps the damage and leaves the Troll `Unmet`
+- [x] Tests: damage from the Troll is still missing at the start of the dragon fight
