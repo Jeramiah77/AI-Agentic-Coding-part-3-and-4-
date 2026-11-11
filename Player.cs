@@ -234,7 +234,7 @@ public class Player
         return _die.Roll(Weapon.MaxDamage);
     }
 
-    public string Attack(Dragon dragon, Messages messages)
+    public string Attack(Monster monster, Messages messages)
     {
         if (Weapon == null)
             return "You have no weapon to attack with.";
@@ -242,7 +242,7 @@ public class Player
         var output = new List<string>();
 
         output.Add(string.Format(
-            messages.GetMessage("player_attack_intro"),
+            messages.GetMessage(monster.PlayerAttackIntroKey),
             messages.TranslateOccupationForDisplay(Occupation),
             messages.TranslateWeaponForDisplay(Weapon.Type)
         ));
@@ -256,21 +256,21 @@ public class Player
         // MISS
         if (!AttackHits(attackRoll))
         {
-            output.Add(string.Format(messages.GetMessage("player_missed_dragon"), dragon.Name));
+            output.Add(string.Format(messages.GetMessage("player_missed_dragon"), monster.Name));
             return string.Join(Environment.NewLine, output);
         }
 
-        output.Add(string.Format(messages.GetMessage("player_hit_dragon"), dragon.Name));
+        output.Add(string.Format(messages.GetMessage("player_hit_dragon"), monster.Name));
 
         int defenseRoll = _die.Roll(20);
-        output.Add(string.Format(messages.GetMessage("block_roll"), dragon.Name, defenseRoll, dragon.Agility));
+        output.Add(string.Format(messages.GetMessage("block_roll"), monster.Name, defenseRoll, monster.Agility));
 
         // DEFENSE
-        if (defenseRoll <= dragon.Agility)
+        if (defenseRoll <= monster.Agility)
         {
-            output.Add(string.Format(messages.GetMessage("dragon_defended_player_attack"), dragon.Name));
+            output.Add(string.Format(messages.GetMessage("dragon_defended_player_attack"), monster.Name));
             output.Add(string.Format(
-                dragon.GetRandomDefenseTaunt(messages),
+                monster.GetRandomDefenseTaunt(messages),
                 messages.TranslateRaceForDisplay(Race)
             ));
             return string.Join(Environment.NewLine, output);
@@ -278,16 +278,16 @@ public class Player
 
         // DAMAGE
         int damage = RollDamage();
-        dragon.HealthPoints -= damage;
+        monster.HealthPoints -= damage;
 
         output.Add(string.Format(messages.GetMessage("player_damage_dealt"), damage));
-        output.Add(string.Format(messages.GetMessage("dragon_health_now"), dragon.Name, dragon.HealthPoints));
+        output.Add(string.Format(messages.GetMessage("dragon_health_now"), monster.Name, monster.HealthPoints));
 
         // END
-        if (dragon.HealthPoints <= 0)
-            output.Add(messages.GetMessage("dragon_defeated_narrative"));
+        if (monster.HealthPoints <= 0)
+            output.Add(messages.GetMessage(monster.DefeatedNarrativeKey));
         else
-            output.Add(dragon.GetRandomDamageReply(messages));
+            output.Add(monster.GetRandomDamageReply(messages));
 
         return string.Join(Environment.NewLine, output);
     }
