@@ -69,3 +69,17 @@ The Troll was beaten in a fight. Later trips west show its body by the bridge.
 
 **Outwitted**:
 The Troll was beaten with a right Riddle answer. Later trips west show it waving the Player across.
+
+### Progress
+
+**Defeat**:
+The Player's HealthPoints reaching 0 in a fight with any Monster. Retreating or fleeing is never a Defeat.
+_Avoid_: Death, game over, losing
+
+**Checkpoint**:
+A snapshot of the Player and the world, taken each time the Player arrives at the crossroads. After a Defeat the Player may return to the last Checkpoint. It lasts only for the current run.
+_Avoid_: Save, save point, respawn
+
+**Retry**:
+One return to the last Checkpoint after a Defeat. A Player has 3 per run; spending one is permanent, and a Defeat with none left ends the game.
+_Avoid_: Life, continue, respawn
