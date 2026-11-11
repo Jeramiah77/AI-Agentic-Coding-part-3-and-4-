@@ -73,13 +73,17 @@ The Troll was beaten with a right Riddle answer. Later trips west show it waving
 ### Progress
 
 **Defeat**:
-The Player's HealthPoints reaching 0 in a fight with any Monster. Retreating or fleeing is never a Defeat.
+The Player's HealthPoints reaching 0 in a fight with any Monster, or the Player fleeing or retreating from a Monster, which always strikes them down from behind.
 _Avoid_: Death, game over, losing
 
 **Checkpoint**:
-A snapshot of the Player and the world, taken each time the Player arrives at the crossroads. After a Defeat the Player may return to the last Checkpoint. It lasts only for the current run.
+A snapshot of the Player and the world, taken each time the Player arrives at the crossroads. After a Defeat the Player may return to the last Checkpoint, at Full Health. It lasts only for the current run.
 _Avoid_: Save, save point, respawn
 
+**Full Health**:
+The Health Points a Player or Monster had when created. Nothing in the game raises Health Points above it.
+_Avoid_: Max HP, starting HP
+
 **Retry**:
-One return to the last Checkpoint after a Defeat. A Player has 3 per run; spending one is permanent, and a Defeat with none left ends the game.
+One return to the last Checkpoint after a Defeat. Retries are unlimited: the Player may Retry after every Defeat.
 _Avoid_: Life, continue, respawn
